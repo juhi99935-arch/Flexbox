@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    """
+===========================================================
+Korean Coding Wallpaper Generator (Python + Pillow)
+===========================================================
+Is script se aap khud code chala kar high-res wallpaper generate kar sakte hain!
+"""
+
+import os
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
+
+def create_korean_coding_wallpaper(
+    input_bg_path="seoul_bg.jpg",
+    output_path="my_custom_wallpaper.png",
+    main_text="CODING",
+    sub_text="코딩 • SEOUL NIGHTS",
+    tagline="// EAT. SLEEP. CODE. REPEAT."
+):
+    width, height = 1920, 1080
+
+    # 1. Background image load karein ya create karein
+    if os.path.exists(input_bg_path):
+        bg = Image.open(input_bg_path).convert("RGBA")
+        bg = bg.resize((width, height), Image.Resampling.LANCZOS)
+    else:
+        # Fallback dark gradient background
+        bg = Image.new("RGBA", (width, height), (10, 10, 22, 255))
+
+    # 2. Dark vignette / overlay for readability
+    overlay = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    overlay_draw = ImageDraw.Draw(overlay)
+    
+    # Top/Bottom darkened gradient
+    for y in range(height):
+        alpha = int(90 + (abs(y - height // 2) / (height / 2)) * 120)
+        overlay_draw.line([(0, y), (width, y)], fill=(5, 5, 12, min(alpha, 210)))
+
+    # Combine background and overlay
+    combined = Image.alpha_composite(bg, overlay)
+
+    # 3. Text and Graphics Layer
+    text_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(text_layer)
+
+    # Load default or standard font
+    try:
+        # Windows system fonts
+        font_big = ImageFont.truetype("arialbd.ttf", 150)
+        font_sub = ImageFont.truetype("malgun.ttf", 36) # Korean font on Windows
+        font_code = ImageFont.truetype("consola.ttf", 22)
+        font_tag = ImageFont.truetype("arial.ttf", 22)
+    except Exception:
+        font_big = font_sub = font_code = font_tag = ImageFont.load_default()
+
+    # Center coordinates
+    center_x = width // 2
+    center_y = height // 2
+
+    # Draw Korean Subtitle (Pink Glow)
+    sub_bbox = draw.textbbox((0, 0), sub_text, font=font_sub)
+    sub_w = sub_bbox[2] - sub_bbox[0]
+    draw.text((center_x - sub_w // 2, center_y - 120), sub_text, font=font_sub, fill=(255, 0, 128, 240))
+
+    # Draw Big Glow for "CODING"
+    main_bbox = draw.textbbox((0, 0), main_text, font=font_big)
+    main_w = main_bbox[2] - main_bbox[0]
+    main_h = main_bbox[3] - main_bbox[1]
+    text_x = center_x - main_w // 2
+    text_y = center_y - main_h // 2 + 10
+
+    # Glow layer
+    glow_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    glow_draw = ImageDraw.Draw(glow_layer)
+    glow_draw.text((text_x, text_y), main_text, font=font_big, fill=(0, 229, 255, 180))
+    glow_layer = glow_layer.filter(ImageFilter.GaussianBlur(25))
+
+    # Draw crisp front text
+    draw.text((text_x, text_y), main_text, font=font_big, fill=(255, 255, 255, 255))
+
+    # Draw Tagline
+    tag_bbox = draw.textbbox((0, 0), tagline, font=font_tag)
+    tag_w = tag_bbox[2] - tag_bbox[0]
+    draw.text((center_x - tag_w // 2, center_y + 120), tagline, font=font_tag, fill=(0, 229, 255, 220))
+
+    # 4. Code Box at Bottom Left
+    box_x0, box_y0 = 80, height - 260
+    box_x1, box_y1 = 620, height - 70
+    draw.rounded_rectangle([box_x0, box_y0, box_x1, box_y1], radius=16, fill=(10, 12, 24, 200), outline=(0, 229, 255, 120), width=2)
+
+    # Mac/Terminal Dots
+    draw.ellipse([box_x0 + 20, box_y0 + 15, box_x0 + 32, box_y0 + 27], fill=(255, 95, 86))
+    draw.ellipse([box_x0 + 40, box_y0 + 15, box_x0 + 52, box_y0 + 27], fill=(255, 189, 46))
+    draw.ellipse([box_x0 + 60, box_y0 + 15, box_x0 + 72, box_y0 + 27], fill=(39, 201, 63))
+
+    code_lines = [
+        "async def build_future():",
+        "    skills = ['Python', 'AI', 'FullStack']",
+        "    while True:",
+        "        await code_with_passion(city='Seoul')",
+    ]
+
+    curr_y = box_y0 + 45
+    for line in code_lines:
+        draw.text((box_x0 + 25, curr_y), line, font=font_code, fill=(220, 240, 255, 230))
+        curr_y += 30
+
+    # Top Status Badge
+    draw.rounded_rectangle([80, 60, 360, 110], radius=25, fill=(10, 12, 24, 180), outline=(0, 229, 255, 100), width=1)
+    draw.ellipse([105, 80, 115, 90], fill=(0, 229, 255, 255))
+    draw.text((130, 75), "SEOUL // DEV MODE", font=font_code, fill=(0, 229, 255, 255))
+
+    # Merge everything
+    final_img = Image.alpha_composite(combined, glow_layer)
+    final_img = Image.alpha_composite(final_img, text_layer)
+
+    # Save
+    final_img.convert("RGB").save(output_path, "PNG", quality=100)
+    print(f"Wallpaper successfully created: {output_path}")
+
+if __name__ == "__main__":
+    create_korean_coding_wallpaper()
+
+</body>
+</html>
