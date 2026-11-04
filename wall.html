@@ -1,131 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Testimonials</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #edf2f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 40px 20px;
+    }
+
+    
+    .title {
+      text-align: center;
+      letter-spacing: 4px;
+      color: #6b7280;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+   
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    
+    .card {
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    
+    .user {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .user img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+    }
+
+    .user h4 {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .user p {
+      font-size: 12px;
+      opacity: 0.6;
+    }
+
+    /* कार्ड की मुख्य हेडिंग */
+    .card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 14px;
+    }
+
+    
+    .card p.text {
+      font-size: 13px;
+      line-height: 1.6;
+      opacity: 0.75;
+    }
+
+    
+    .card-daniel {
+      grid-column: 1 / 3;
+      grid-row: 1;
+      background-color: #733fc8;
+      color: #ffffff;
+    }
+    .card-daniel .user img {
+      border: 2px solid #a775f1;
+    }
+
+    
+    .card-jonathan {
+      grid-column: 3 / 4;
+      grid-row: 1;
+      background-color: #48556a;
+      color: #ffffff;
+    }
+
+    
+    .card-kira {
+      grid-column: 4 / 5;
+      grid-row: 1 / 3;
+      background-color: #ffffff;
+      color: #48556a;
+    }
+
+    
+    .card-jeanette {
+      grid-column: 1 / 2;
+      grid-row: 2;
+      background-color: #ffffff;
+      color: #48556a;
+    }
+
+    
+    .card-patrick {
+      grid-column: 2 / 4;
+      grid-row: 2;
+      background-color: #19202d;
+      color: #ffffff;
+    }
+    .card-patrick .user img {
+      border: 2px solid #733fc8;
+    }
+
+    
+    @media (max-width: 900px) {
+      .testimonials {
+        grid-template-columns: 1fr;
+      }
+      .card-daniel, .card-jonathan, .card-kira, .card-jeanette, .card-patrick {
+        grid-column: auto;
+        grid-row: auto;
+      }
+    }
+  </style>
 </head>
 <body>
-    """
-===========================================================
-Korean Coding Wallpaper Generator (Python + Pillow)
-===========================================================
-Is script se aap khud code chala kar high-res wallpaper generate kar sakte hain!
-"""
 
-import os
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+  <div class="title">TESTIMONIALS</div>
 
-def create_korean_coding_wallpaper(
-    input_bg_path="seoul_bg.jpg",
-    output_path="my_custom_wallpaper.png",
-    main_text="CODING",
-    sub_text="코딩 • SEOUL NIGHTS",
-    tagline="// EAT. SLEEP. CODE. REPEAT."
-):
-    width, height = 1920, 1080
+  <div class="testimonials">
 
-    # 1. Background image load karein ya create karein
-    if os.path.exists(input_bg_path):
-        bg = Image.open(input_bg_path).convert("RGBA")
-        bg = bg.resize((width, height), Image.Resampling.LANCZOS)
-    else:
-        # Fallback dark gradient background
-        bg = Image.new("RGBA", (width, height), (10, 10, 22, 255))
+    <!-- Card 1: Daniel Clifford -->
+    <div class="card card-daniel">
+      <div class="user">
+        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80" alt="Daniel Clifford">
+        <div>
+          <h4>Daniel Clifford</h4>
+          <p>Verified Graduate</p>
+        </div>
+      </div>
+      <h3>I received a job offer mid-course, and the subjects I learned were current, if not more so, in the company I joined. I honestly feel I got every penny's worth.</h3>
+      <p class="text">"I was an EMT for many years before I joined the bootcamp. I've been looking to make a transition and have heard some people who had an amazing experience here. I signed up for the free intro course and found it incredibly fun! I enrolled shortly thereafter. The next 12 weeks was the best - and most gruelling - time of my life. Since completing the course, I've successfully switched careers, working as a Software Engineer at a VR startup."</p>
+    </div>
 
-    # 2. Dark vignette / overlay for readability
-    overlay = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-    overlay_draw = ImageDraw.Draw(overlay)
-    
-    # Top/Bottom darkened gradient
-    for y in range(height):
-        alpha = int(90 + (abs(y - height // 2) / (height / 2)) * 120)
-        overlay_draw.line([(0, y), (width, y)], fill=(5, 5, 12, min(alpha, 210)))
+    <!-- Card 2: Jonathan Walters -->
+    <div class="card card-jonathan">
+      <div class="user">
+        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop&q=80" alt="Jonathan Walters">
+        <div>
+          <h4>Jonathan Walters</h4>
+          <p>Verified Graduate</p>
+        </div>
+      </div>
+      <h3>The team was very supportive and kept me motivated.</h3>
+      <p class="text">"I started as a total newbie with virtually no coding skills. I now work as a mobile engineer for a big company. This was one of the best investments I've made in myself."</p>
+    </div>
 
-    # Combine background and overlay
-    combined = Image.alpha_composite(bg, overlay)
+    <!-- Card 5: Kira Whittle (Right Column Full Height) -->
+    <div class="card card-kira">
+      <div class="user">
+        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&auto=format&fit=crop&q=80" alt="Kira Whittle">
+        <div>
+          <h4>Kira Whittle</h4>
+          <p>Verified Graduate</p>
+        </div>
+      </div>
+      <h3>Such a life-changing experience. Highly recommended!</h3>
+      <p class="text">"Before joining the bootcamp, I've never written a line of code. I needed some structure from professionals who can help me learn programming step by step. I was encouraged to enroll by a former student of theirs who can only say wonderful things about the program. The entire curriculum and staff did not disappoint. They were very hands-on and I never had to wait too long for assistance. The agile team project, in particular, was outstanding. It took my learning to the next level in a way that tutorial could ever have. In fact, I've now referred two friends to join. They are now in the process of transition to new careers thanks to the bootcamp. I highly recommend it to anyone looking to jump into programming as a career."</p>
+    </div>
 
-    # 3. Text and Graphics Layer
-    text_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(text_layer)
+    <!-- Card 3: Jeanette Harmon -->
+    <div class="card card-jeanette">
+      <div class="user">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Jeanette Harmon">
+        <div>
+          <h4>Jeanette Harmon</h4>
+          <p>Verified Graduate</p>
+        </div>
+      </div>
+      <h3>An overall wonderful and rewarding experience</h3>
+      <p class="text">"Thank you for the wonderful experience! I now have a job I really enjoy, and make a good living while doing something I love."</p>
+    </div>
 
-    # Load default or standard font
-    try:
-        # Windows system fonts
-        font_big = ImageFont.truetype("arialbd.ttf", 150)
-        font_sub = ImageFont.truetype("malgun.ttf", 36) # Korean font on Windows
-        font_code = ImageFont.truetype("consola.ttf", 22)
-        font_tag = ImageFont.truetype("arial.ttf", 22)
-    except Exception:
-        font_big = font_sub = font_code = font_tag = ImageFont.load_default()
+    <!-- Card 4: Patrick Abrams -->
+    <div class="card card-patrick">
+      <div class="user">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Patrick Abrams">
+        <div>
+          <h4>Patrick Abrams</h4>
+          <p>Verified Graduate</p>
+        </div>
+      </div>
+      <h3>Awesome teaching support from TAs who did the bootcamp themselves. Getting guidance now feels easier.</h3>
+      <p class="text">"The staff seem really concerned about my progress which I find really encouraging. The program gave me the confidence necessary to be able to go out in the world and present myself as a capable junior developer. The standard is above the rest. You will get the personal attention you need from an incredible community of smart and amazing people."</p>
+    </div>
 
-    # Center coordinates
-    center_x = width // 2
-    center_y = height // 2
-
-    # Draw Korean Subtitle (Pink Glow)
-    sub_bbox = draw.textbbox((0, 0), sub_text, font=font_sub)
-    sub_w = sub_bbox[2] - sub_bbox[0]
-    draw.text((center_x - sub_w // 2, center_y - 120), sub_text, font=font_sub, fill=(255, 0, 128, 240))
-
-    # Draw Big Glow for "CODING"
-    main_bbox = draw.textbbox((0, 0), main_text, font=font_big)
-    main_w = main_bbox[2] - main_bbox[0]
-    main_h = main_bbox[3] - main_bbox[1]
-    text_x = center_x - main_w // 2
-    text_y = center_y - main_h // 2 + 10
-
-    # Glow layer
-    glow_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-    glow_draw = ImageDraw.Draw(glow_layer)
-    glow_draw.text((text_x, text_y), main_text, font=font_big, fill=(0, 229, 255, 180))
-    glow_layer = glow_layer.filter(ImageFilter.GaussianBlur(25))
-
-    # Draw crisp front text
-    draw.text((text_x, text_y), main_text, font=font_big, fill=(255, 255, 255, 255))
-
-    # Draw Tagline
-    tag_bbox = draw.textbbox((0, 0), tagline, font=font_tag)
-    tag_w = tag_bbox[2] - tag_bbox[0]
-    draw.text((center_x - tag_w // 2, center_y + 120), tagline, font=font_tag, fill=(0, 229, 255, 220))
-
-    # 4. Code Box at Bottom Left
-    box_x0, box_y0 = 80, height - 260
-    box_x1, box_y1 = 620, height - 70
-    draw.rounded_rectangle([box_x0, box_y0, box_x1, box_y1], radius=16, fill=(10, 12, 24, 200), outline=(0, 229, 255, 120), width=2)
-
-    # Mac/Terminal Dots
-    draw.ellipse([box_x0 + 20, box_y0 + 15, box_x0 + 32, box_y0 + 27], fill=(255, 95, 86))
-    draw.ellipse([box_x0 + 40, box_y0 + 15, box_x0 + 52, box_y0 + 27], fill=(255, 189, 46))
-    draw.ellipse([box_x0 + 60, box_y0 + 15, box_x0 + 72, box_y0 + 27], fill=(39, 201, 63))
-
-    code_lines = [
-        "async def build_future():",
-        "    skills = ['Python', 'AI', 'FullStack']",
-        "    while True:",
-        "        await code_with_passion(city='Seoul')",
-    ]
-
-    curr_y = box_y0 + 45
-    for line in code_lines:
-        draw.text((box_x0 + 25, curr_y), line, font=font_code, fill=(220, 240, 255, 230))
-        curr_y += 30
-
-    # Top Status Badge
-    draw.rounded_rectangle([80, 60, 360, 110], radius=25, fill=(10, 12, 24, 180), outline=(0, 229, 255, 100), width=1)
-    draw.ellipse([105, 80, 115, 90], fill=(0, 229, 255, 255))
-    draw.text((130, 75), "SEOUL // DEV MODE", font=font_code, fill=(0, 229, 255, 255))
-
-    # Merge everything
-    final_img = Image.alpha_composite(combined, glow_layer)
-    final_img = Image.alpha_composite(final_img, text_layer)
-
-    # Save
-    final_img.convert("RGB").save(output_path, "PNG", quality=100)
-    print(f"Wallpaper successfully created: {output_path}")
-
-if __name__ == "__main__":
-    create_korean_coding_wallpaper()
+  </div>
 
 </body>
 </html>
